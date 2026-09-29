@@ -5,6 +5,8 @@
 
 HT16K33 seg(0x70);
 Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
+const int irpin = 9;
+
 void setup() {
   const char fringe[] = "    FRINGE     ";
   pinMode(LED_BUILTIN, OUTPUT);
@@ -23,7 +25,7 @@ void setup() {
     alpha4.writeDigitAscii(2, fringe[i+2]);
     alpha4.writeDigitAscii(3, fringe[i+3]);
     alpha4.writeDisplay();
-    delay(200);
+    delay(180);
   }
   delay(200);
   alpha4.writeDigitAscii(0, 'M');
@@ -31,19 +33,19 @@ void setup() {
   alpha4.writeDigitAscii(2, 'S');
   alpha4.writeDigitAscii(3, 'L');
   alpha4.writeDisplay();
-  delay(400);
+  delay(440);
   alpha4.writeDigitAscii(0, ' ');
   alpha4.writeDigitAscii(1, 'B');
   alpha4.writeDigitAscii(2, 'Y');
   alpha4.writeDigitAscii(3, ' ');
   alpha4.writeDisplay();
-  delay(300);
+  delay(340);
   alpha4.writeDigitAscii(0, 'G');
   alpha4.writeDigitAscii(1, 'a');
   alpha4.writeDigitAscii(2, 'b');
   alpha4.writeDigitAscii(3, 'e');
   alpha4.writeDisplay();
-  delay(400);
+  delay(440);
   alpha4.writeDigitAscii(0, ' ');
   alpha4.writeDigitAscii(1, ' ');
   alpha4.writeDigitAscii(2, ' ');
@@ -51,7 +53,7 @@ void setup() {
   alpha4.writeDisplay();
 
 
-
+  tone(irpin, 30000); //start the ir pulse at 30khz
   digitalWrite(LED_BUILTIN, LOW);
 }
 
