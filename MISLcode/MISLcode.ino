@@ -5,18 +5,38 @@
 
 HT16K33 seg(0x70);
 Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
-const int CARRIER_PIN = 9;
-const uint32_t CARRIER_HZ  = 30000;
-const uint16_t WINDOW_US   = 200;
-const uint16_t REPORT_MS   = 5000;
 
-uint16_t hist[16];
+const int CARRIER_PIN = 9;
+
+const uint32_t CARRIER_HZ    = 30000;
+const uint16_t WINDOW_US     = 200;
+const uint8_t  CLEAR_MIN     = 3;       // more than 3 edges means unblocked
+const uint8_t  BLOCK_MAX     = 1;       // <=1 edges means spoke is blocking
+const uint8_t  BLOCK_CONFIRM = 2;       // consecutive low windows needed to call it blocked
+const uint32_t MIN_EVENT_US  = 3000;    // ignore spoke events closer than this (40 mph ~ 6400 us)
+const uint32_t TIMEOUT_US    = 1000000; // no spoke seen for a second means stopped
+const uint16_t REPORT_MS     = 250;
+
+const float WHEEL_DIAMETER_IN = 7.2;
+const uint8_t SPOKES          = 5;
+const float INCHES_PER_EVENT  = 3.14159265f * WHEEL_DIAMETER_IN / SPOKES;  //wheel rotation per spoke
+
+uint32_t nextWin;
+uint16_t lastCount;
+bool     clearState = false;
+uint8_t  lowStreak  = 0;
+bool     hasEvent   = false;
+uint32_t lastEventT = 0;
+uint32_t lastDt     = 0;
+uint32_t dtSum      = 0;
+uint16_t dtN        = 0;
+uint32_t lastReportMs;
 
 void setup() {
   const char fringe[] = "    FRINGE     ";
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
-  Serial.begin(9600);
+  Serial.begin(38400);
   Serial.println("Starting logo sweep");
   Wire.begin();
   Wire.setClock(100000);
@@ -58,44 +78,96 @@ void setup() {
   alpha4.writeDisplay();
 
   pinMode(5, INPUT); //comparator input
+
+  //timer 1 counting edges
   TCCR1A = 0;
   TCCR1B = (1 << CS12) | (1 << CS11) | (1 << CS10);    //external clock on T1, rising edge
   TCNT1 = 0;
   Serial.println("Starting Carrier Frequency");
-  tone(CARRIER_PIN, CARRIER_HZ); //start the ir pulse at 30khz
+  pinMode(3,OUTPUT);
+  //
+  TCCR2A = (1 << COM2B1) | (1 << WGM21) | (1 << WGM20);
+  TCCR2B = (1 << WGM22) | (1 << CS21);
+  OCR2A = (uint8_t)(F_CPU / 8UL / CARRIER_HZ - 1);
+  OCR2B = OCR2A / 2;
+
+  nextWin = micros() + WINDOW_US;
+  lastCount = TCNT1;
+  lastReportMs = millis();
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void loop() {
+void spokeEvent(uint32_t t) {
+  if (hasEvent) {
+    uint32_t dt = t - lastEventT;
+    if (dt < MIN_EVENT_US) return;      //too soon to be a real spoke
+    lastDt = dt;
+    dtSum += dt;
+    dtN++;
+  }
+  hasEvent = true;
+  lastEventT = t;
+}
 
-  memset(hist, 0, sizeof(hist));
-  uint16_t last = TCNT1;
-  uint32_t nextWin = micros() + WINDOW_US;
-  uint32_t endMs = millis() + REPORT_MS;
-
-  while ((int32_t)(millis() - endMs) < 0) {
-    int32_t late = (int32_t)(micros() - nextWin);
-    if (late >= 0) {
-      if (late > WINDOW_US) {                          //fell behind resync, skip this sample
-        nextWin = micros() + WINDOW_US;
-        last = TCNT1;
-        continue;
-      }
-      nextWin += WINDOW_US;
-      uint16_t now = TCNT1;
-      uint16_t d = now - last;
-      last = now;
-      if (d > 15) d = 15;
-      hist[d]++;
+void processWindow(uint8_t n, uint32_t t) {
+  if (n >= CLEAR_MIN) {
+    clearState = true;
+    lowStreak = 0;
+  } else if (n <= BLOCK_MAX) {
+    if (clearState && ++lowStreak >= BLOCK_CONFIRM) {
+      clearState = false;
+      lowStreak = 0;
+      spokeEvent(t);                    //carrier just disappeared: spoke leading edge
     }
+  } else {
+    lowStreak = 0;                      //exactly 2 edges: ambiguous, hold state
+  }
+}
+
+void report() {
+  float mph = 0;
+  if (hasEvent && (dtN || lastDt)) {
+    uint32_t since = micros() - lastEventT;
+    float dt = dtN ? (float)dtSum / dtN : (float)lastDt;
+    if (since > dt) dt = since;         // speed can't exceed spacing / time since last spoke
+    if (since <= TIMEOUT_US && dt > 0) mph = INCHES_PER_EVENT / (dt * 1e-6f) / 17.6f;
+  }
+  dtSum = 0;
+  dtN = 0;
+  char buf[8];
+  dtostrf(mph, 4, 1, buf);
+  if (buf[0] == ' ') buf[0] = '0';
+  alpha4.writeDigitAscii(0, ' ');
+  alpha4.writeDigitAscii(1, buf[0]);
+  alpha4.writeDigitAscii(2, buf[1], true);
+  alpha4.writeDigitAscii(3, buf[3]);
+  alpha4.writeDisplay();
+  Serial.print(F("mph: "));
+  Serial.println(mph, 1);
+  
+
+}
+
+
+void loop() {
+  int32_t late = (int32_t)(micros() - nextWin);
+  if (late >= 0) {
+    if (late > (int32_t)WINDOW_US) {    // fell behind (e.g. during a Serial print): resync
+      nextWin = micros() + WINDOW_US;
+      lastCount = TCNT1;
+      return;
+    }
+    uint32_t winEnd = nextWin;
+    nextWin += WINDOW_US;
+    uint16_t now = TCNT1;
+    uint16_t d = now - lastCount;
+    lastCount = now;
+    uint8_t n = (d > 255) ? 255 : (uint8_t)d;
+    processWindow(n, winEnd);
   }
 
-  Serial.println(F("edges/window : windows"));
-  for (uint8_t i = 0; i < 16; i++) {
-    Serial.print(i);
-    Serial.print(i == 15 ? F("+ : ") : F("  : "));
-    Serial.println(hist[i]);
+  if (millis() - lastReportMs >= REPORT_MS) {
+    lastReportMs += REPORT_MS;
+    report();
   }
-  Serial.println();
-
 }
