@@ -2,7 +2,7 @@
 The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powered, modulated infrared speedometer for [Fringe's](https://fringe.org/) CMU [buggies](https://www.cmu.edu/buggy/). 
 
 ## Context
-The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure measure how different buggy engineering choices affect top speed.
+The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure measure how different buggy engineering choices affect top speed would allow for data-driven designs.
 Other teams have tackled this challenge through the use of GPS beacons to track location and speed at the same time. However, if you have used a map on your phone, you likely know that GPS isn't perfectly accurate and can jump around, leading to inaccurate speed values.
 
 ## The Problem
