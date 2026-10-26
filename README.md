@@ -10,7 +10,7 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
 
 
 ## Context
-The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure measure how different buggy engineering choices affect top speed would allow for data-driven designs.
+The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure how different buggy engineering choices affect top speed would allow for data-driven designs.
 Other teams have tackled this challenge through the use of GPS beacons to track location and speed at the same time. However, GPS is not perfect even when using an IMU to fill in the gaps between GPS pings.
 
 ## The Problem
@@ -92,7 +92,7 @@ Timer2 carrier (D3) -> IR LED -> [wheel] -> phototransistor -> analog circuit ->
  
 **Sampling:** A Timer0 interrupt fires every 200 µs (one "window") and reads how many edges Timer1 counted since the last window. A clear beam gives about 6 edges per window. A blocked beam gives 0, with an occasional stray single edge.
  
-**Clear or blocked?** Each window is classified:
+**Clear or blocked** Each window is classified:
 - 3 or more edges: beam clear.
 - 1 or fewer edges for 2 windows in a row (0.4 ms): beam blocked, so a spoke is passing.
 - Exactly 2 edges: unsure, so the previous state is kept.
@@ -126,8 +126,20 @@ The 2-window rule keeps stray edges from being counted as spokes, and it still c
 | `dt_ms` | Time since the previous spoke (blank on the first row) |
 | `used` | 1 = counted toward the displayed speed, 0 = ignored by the low-speed filter (still logged) |
  
-To get accurate speed from the log, treat the rows as position markers: plot `spoke` × 4.52 in against `time_ms`, smooth it, and differentiate. A single `dt_ms` is only good to about ±1.5% at 20 mph and ±3% at 40 mph because of the 0.2 ms steps, so smoothing over several spokes gives cleaner results. The real distance per spoke (polyurethane squish included) can be measured by rolling the buggy a known distance and dividing by the number of spokes logged.
+A single `dt_ms` is only good to about ±1.5% at 20 mph and ±3% at 40 mph because of the 0.2 ms steps, so smoothing over several spokes gives cleaner results. The real distance per spoke (polyurethane squish included) can be measured by rolling the buggy a known distance and dividing by the number of spokes logged. These are editable option in [plot_run.py](/runs/plot_run.py).
  
+## Results
+
+Here is an example of the M.I.S.L.'s output graphed:
+
+<br>
+<figure>
+  <img src="/Images/blackbirdlastrun102526.png" alt="plot_run output" width="700">
+  <figcaption><i>Speed and Acceleration of a Roll</i></figcaption>
+</figure><br>
+
+Here we can see the roll starting at the start of hill 2 at ~213 seconds. The buggy goes down the free roll, gaining speed, and hitting a top speed of 31.8MPH at the bottom of the free roll. The buggy loses speed as it takes the chute turn. You can distincly see each of the 3 back hills and the individual pushes from each pusher in the sawtooth pattern. Hill 3 appears from 298s-324s, hill 4 is from 324s-354s and hill 5 is from 324s-386s. 
+
 **Firmware Notes:**
 - All of the timing assumes 8 MHz.
 - Libraries: Adafruit GFX, Adafruit BusIO, Adafruit LED Backpack, and SdFat (version 2.x).
@@ -147,7 +159,7 @@ To get accurate speed from the log, treat the rows as position markers: plot `sp
 4. If you wish to record the speed data or find the high speed of the buggy, press the small button on the right side of the case. An `R` should appear in the leftmost display segment indicating that a recording has started. Upon pressing the button again the recording will stop and the highest speed of the run will be shown for 10 seconds.
 
 5. Remove the SD card for viewing and processing the data.
-    - Use [plot_run.py](/runs/plot_run.py) to view the speed and acceleration of the entire run
+    - Use [plot_run.py](/runs/plot_run.py) to view the speed and acceleration of the entire run.
 
 
 ## Troubleshooting
