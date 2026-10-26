@@ -32,6 +32,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 </figure>
 <br>
 
+<br>
 **Microprocessor:** Arduino Pro Mini 3.3V (ATmega328P, 8 MHz) — low profile and has a low current draw while still having enough pins to allow for all of the device's capabilities.
 
 **Power:** 3 AAA Batteries in series - 4.5V at full charge, feeding the Arduino's voltage regulator. 47µF tantalum capacitor + 0.1µF ceramic across the SD card reader to accommodate its sporadic, but high current draw.
