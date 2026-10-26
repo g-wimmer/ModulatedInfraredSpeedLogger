@@ -3,7 +3,7 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
 
 <figure>
   <img src="/Images/MISL.jpg" alt="Modulated Infrared Speed Logger" width="400">
-  <figcaption>Modulated Infrared Speed Logger</figcaption>
+  <figcaption><i>Modulated Infrared Speed Logger</i></figcaption>
 </figure>
 <br>
 
@@ -28,7 +28,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 <br>
 <figure>
   <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
-  <figcaption>M.I.S.L. in a buggy</figcaption>
+  <figcaption><i>M.I.S.L. in a buggy</i></figcaption>
 </figure>
 <br>
 
@@ -42,7 +42,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 <br>
 <figure>
   <img src="/Images/MISLinternals2.jpg" alt="Modulated Infrared Speed Logger internals with SD card reader and display" width="200">
-  <figcaption>M.I.S.L. internals with SD card reader and display</figcaption>
+  <figcaption><i>M.I.S.L. internals with SD card reader and display</i></figcaption>
 </figure>
 <br>
 <br>
@@ -56,13 +56,13 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
 
 <figure>
   <img src="/Images/signalprocessing.jpg" alt="Analog Circuitry" width="300">
-  <figcaption>Signal Processing Circuitry</figcaption>
+  <figcaption><i>Signal Processing Circuitry</i></figcaption>
 </figure>
 <br>
 <br>
 <figure>
   <img src="/Images/MISLinternals.jpg" alt="Internals" width="500">
-  <figcaption>The M.I.S.L.'s 'circuit sandwich'</figcaption>
+  <figcaption><i>The M.I.S.L.'s 'circuit sandwich'</i></figcaption>
 </figure><br><br>
 
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
