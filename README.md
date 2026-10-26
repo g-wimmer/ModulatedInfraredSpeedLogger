@@ -3,12 +3,12 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
 
 ## Context
 The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure measure how different buggy engineering choices affect top speed would allow for data-driven designs.
-Other teams have tackled this challenge through the use of GPS beacons to track location and speed at the same time. However, if you have used a map on your phone, you likely know that GPS isn't perfectly accurate and can jump around, leading to inaccurate speed values.
+Other teams have tackled this challenge through the use of GPS beacons to track location and speed at the same time. However, GPS is not perfect even when using an IMU to fill in the gaps between GPS pings.
 
 ## The Problem
 Speed is currently measured by eyeballing speed from the follow car's speedometer or, during race day, when Sweepstakes sets up a speed checkpoint near the chute turn of the course.
 Currently there is:
-- No accurate measure of speed (other teams infer speed through GPS data)
+- No accurate measure of speed (others infer speed through GPS/IMU data)
 - No continuous logging of speed throughout the entire roll
 - No accurate measure of each pusher's pushing strength (besides measuring the total time to complete a hill) 
 
@@ -28,6 +28,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 
 **Signal Processing:** The phototransistor is connected to a AC-coupler/high-pass filter to isolate the 30kHz carrier signal and remove any noise from ambient light.
 Prototypes of the device made use of a gain stage, half-wave rectifier and envelope detector, but the gain was unnecessary and the envelope detector didn't function consistently enough at these voltage levels (a diode needs about 0.2-0.3V to conduct, and the signal swing is about 0.3V p-p). The gain stage was converted into a unity-gain buffer (LM358) to isolate the high-impedance AC-coupling node from the comparator’s hysteresis network. The signal was then fed into a comparator (LM393) set up as a Schmitt trigger. This results in a clean toggling, on-off, signal. This digital signal was then fed into the Arduino Pro Mini's hardware counter to count the number of flips (pulses from the IR LED).
+![Analog Circuit](/Images/signalprocessing.jpg)
 
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
 
