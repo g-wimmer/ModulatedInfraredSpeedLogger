@@ -146,7 +146,7 @@ Here is an example of the M.I.S.L.'s output graphed:
 </figure>
 <br>
 
-Here we can see the roll starting at the start of hill 2 at ~213 seconds. The buggy goes down the free roll, gaining speed, and hitting a top speed of 31.8MPH at the bottom of the free roll. The buggy loses speed as it takes the chute turn. You can distincly see each of the 3 back hills and the individual pushes from each pusher in the sawtooth pattern. Hill 3 appears from 298s-324s, hill 4 is from 324s-354s and hill 5 is from 324s-386s. 
+Here we can see the roll starting at the start of hill 2 at ~213 seconds. The buggy goes down the free roll, gaining speed, and hitting a top speed of 31.8MPH at the bottom of the free roll. The buggy loses speed as it takes the chute turn. You can distinctly see each of the 3 back hills and the individual pushes from each pusher in the sawtooth pattern. Hill 3 appears from 298s-324s, hill 4 is from 324s-354s and hill 5 is from 354s-386s. 
 
 
 ## Usage
@@ -168,7 +168,7 @@ Here we can see the roll starting at the start of hill 2 at ~213 seconds. The bu
 ## Troubleshooting
 Future members of Fringe are welcome to reach out to me if the device breaks or is no longer functioning properly.
 
-- If, after a roll, the device reads a highscore that is unbelievably high, the most likely cause is that the wheel's spoke was left partially obscuring the beam, causing the sensor to toggle repeatedly. Do not worry, once the wheel starts spinning, it will record properly. The [plot_run.py](/runs/plot_run.py) program will filter these abberant datapoints out.
+- If, after a roll, the device reads a highscore that is unbelievably high, the most likely cause is that the wheel's spoke was left partially obscuring the beam, causing the sensor to toggle repeatedly. Do not worry, once the wheel starts spinning, it will record properly. The [plot_run.py](/runs/plot_run.py) program will filter these aberrant datapoints out.
 
 - If the device is reading `00.0` even if a wheel is spinning, the most likely cause is the phototransistor being obscured. Take a q-tip and clean out the phototransistor and LED holding tubes. If that doesnt work, use a small amount of IPA on the q-tip. As a last resort, use a very small amount of acetone on the q-tip to clean the phototransistor's surface. (make sure to dry quickly, acetone will melt the case and the phototransistor's surface)
 
