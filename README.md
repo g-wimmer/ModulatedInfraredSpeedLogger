@@ -5,7 +5,7 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
   <img src="/Images/MISL.jpg" alt="Modulated Infrared Speed Logger" width="400">
   <figcaption>Modulated Infrared Speed Logger</figcaption>
 </figure>
-
+<br>
 <figure>
   <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
   <figcaption>M.I.S.L fitted in a buggy</figcaption>
@@ -44,15 +44,11 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
   <img src="/Images/signalprocessing.jpg" alt="Analog Circuitry" width="300">
   <figcaption>Signal Processing Circuitry</figcaption>
 </figure>
-
+<br>
 <figure>
   <img src="/Images/MISLinternals.jpg" alt="Internals" width="300">
   <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
-</figure>\n
-
-
-
-
+</figure><br><br>
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
 
 ## How it Works
