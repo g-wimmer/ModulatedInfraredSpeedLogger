@@ -6,11 +6,7 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
   <figcaption>Modulated Infrared Speed Logger</figcaption>
 </figure>
 <br>
-<br>
-<figure>
-  <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
-  <figcaption>M.I.S.L fitted in a buggy</figcaption>
-</figure>
+
 
 
 ## Context
@@ -29,12 +25,26 @@ What is needed: a device that can accurately measure and store real buggy speeds
 ## Design
 **Space Constraints:** Fringe's buggies are reverse trikes, meaning there are 2 wheels in the front and 1 in the rear. This rear wheel is fully enclosed within the buggy and does not turn for steering and is an optimal choice to place a device to measure its speed. However, each buggy’s shell shape is unique and there is very little space around the rear wheel as the driver's feet can go right up against the front of the rear frame holding the wheel. This leaves the <1in gaps besides the wheel and the ~2in gap behind the wheel. Getting the device into place also means not all of that space is usable, since the device must fit through the tight rear hatch.
 
+<br>
+<figure>
+  <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
+  <figcaption>M.I.S.L. in a buggy</figcaption>
+</figure>
+<br>
+
 **Microprocessor:** Arduino Pro Mini 3.3V (ATmega328P, 8 MHz) — low profile and has a low current draw while still having enough pins to allow for all of the device's capabilities.
 
 **Power:** 3 AAA Batteries in series - 4.5V at full charge, feeding the Arduino's voltage regulator. 47µF tantalum capacitor + 0.1µF ceramic across the SD card reader to accommodate its sporadic, but high current draw.
 - Use alkaline AAAs only. NiMH cells (about 3.6V for three) are too low for the voltage regulator.
  
 **Storage:** Datapoints are buffered in RAM and then written to the microSD card every 2 seconds via the SPI SD card reader. A new CSV file is created per saved run in the format of (`RUN001.CSV`, `RUN002.CSV`, ...).
+
+<br>
+<figure>
+  <img src="/Images/MISLinternals2.jpg" alt="Modulated Infrared Speed Logger internals with SD card reader and display" width="200">
+  <figcaption>M.I.S.L. internals with SD card reader and display</figcaption>
+</figure>
+<br>
 
 **Measurement:** Infrared was chosen as it wouldn't require additional mass attached to the wheel (like a hall effect sensor would). An IR LED emits a carrier signal at 30kHz, driven by an NPN transistor. The light is sent through the gaps between the spokes of the wheel where it is received by a phototransistor. The spokes obscure the signal, which is used to determine whether a spoke is passing by. Modulated IR was chosen to allow the device to work regardless of ambient light conditions.
 
@@ -49,7 +59,7 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
 <br>
 <figure>
   <img src="/Images/MISLinternals.jpg" alt="Internals" width="400">
-  <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
+  <figcaption>The M.I.S.L.'s 'circuit sandwich'</figcaption>
 </figure><br><br>
 
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
