@@ -48,7 +48,7 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
 <figure>
   <img src="/Images/MISLinternals.jpg" alt="Internals" width="300">
   <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
-</figure>
+</figure>\n
 
 
 
