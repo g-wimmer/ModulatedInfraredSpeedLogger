@@ -45,6 +45,9 @@ What is needed: a device that can accurately measure and store real buggy speeds
   <figcaption>M.I.S.L. internals with SD card reader and display</figcaption>
 </figure>
 <br>
+<br>
+<br>
+
 
 **Measurement:** Infrared was chosen as it wouldn't require additional mass attached to the wheel (like a hall effect sensor would). An IR LED emits a carrier signal at 30kHz, driven by an NPN transistor. The light is sent through the gaps between the spokes of the wheel where it is received by a phototransistor. The spokes obscure the signal, which is used to determine whether a spoke is passing by. Modulated IR was chosen to allow the device to work regardless of ambient light conditions.
 
@@ -58,7 +61,7 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
 <br>
 <br>
 <figure>
-  <img src="/Images/MISLinternals.jpg" alt="Internals" width="400">
+  <img src="/Images/MISLinternals.jpg" alt="Internals" width="500">
   <figcaption>The M.I.S.L.'s 'circuit sandwich'</figcaption>
 </figure><br><br>
 
