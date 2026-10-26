@@ -128,6 +128,13 @@ The 2-window rule keeps stray edges from being counted as spokes, and it still c
  
 A single `dt_ms` is only good to about ±1.5% at 20 mph and ±3% at 40 mph because of the 0.2 ms steps, so smoothing over several spokes gives cleaner results. The real distance per spoke (polyurethane squish included) can be measured by rolling the buggy a known distance and dividing by the number of spokes logged. These are editable option in [plot_run.py](/runs/plot_run.py).
  
+**Firmware Notes:**
+- All of the timing assumes 8 MHz.
+- Libraries: Adafruit GFX, Adafruit BusIO, Adafruit LED Backpack, and SdFat (version 2.x).
+- Timer0 is used for the 200 µs sampling interrupt, so `millis()` and `delay()` still work, but `analogWrite()` on pins 5 and 6 does not.
+- Settings at the top of the sketch: `CARRIER_HZ`, `CLEAR_MIN`, `BLOCK_MAX`, `BLOCK_CONFIRM`, `MIN_INTERVAL_PCT`, `WHEEL_DIAMETER_IN`, and `SPOKES`. `WINDOW_US` must stay at 200 since the log timestamps assume it.
+
+
 ## Results
 
 Here is an example of the M.I.S.L.'s output graphed:
@@ -136,15 +143,11 @@ Here is an example of the M.I.S.L.'s output graphed:
 <figure>
   <img src="/Images/blackbirdlastrun102526.png" alt="plot_run output" width="700">
   <figcaption><i>Speed and Acceleration of a Roll</i></figcaption>
-</figure><br>
+</figure>
+<br>
 
 Here we can see the roll starting at the start of hill 2 at ~213 seconds. The buggy goes down the free roll, gaining speed, and hitting a top speed of 31.8MPH at the bottom of the free roll. The buggy loses speed as it takes the chute turn. You can distincly see each of the 3 back hills and the individual pushes from each pusher in the sawtooth pattern. Hill 3 appears from 298s-324s, hill 4 is from 324s-354s and hill 5 is from 324s-386s. 
 
-**Firmware Notes:**
-- All of the timing assumes 8 MHz.
-- Libraries: Adafruit GFX, Adafruit BusIO, Adafruit LED Backpack, and SdFat (version 2.x).
-- Timer0 is used for the 200 µs sampling interrupt, so `millis()` and `delay()` still work, but `analogWrite()` on pins 5 and 6 does not.
-- Settings at the top of the sketch: `CARRIER_HZ`, `CLEAR_MIN`, `BLOCK_MAX`, `BLOCK_CONFIRM`, `MIN_INTERVAL_PCT`, `WHEEL_DIAMETER_IN`, and `SPOKES`. `WINDOW_US` must stay at 200 since the log timestamps assume it.
 
 ## Usage
 0. If you wish to log the data, ensure that a FAT32-formatted microSD card is in place. (other file system formats will not work) When turning on the device, a `NOSD` warning will appear if the SD card is not detected.
