@@ -49,6 +49,7 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
   <img src="/Images/MISLinternals.jpg" alt="Internals" width="300">
   <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
 </figure><br><br>
+
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
 
 ## How it Works
