@@ -6,6 +6,7 @@ The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powere
   <figcaption>Modulated Infrared Speed Logger</figcaption>
 </figure>
 <br>
+<br>
 <figure>
   <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
   <figcaption>M.I.S.L fitted in a buggy</figcaption>
@@ -45,8 +46,9 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
   <figcaption>Signal Processing Circuitry</figcaption>
 </figure>
 <br>
+<br>
 <figure>
-  <img src="/Images/MISLinternals.jpg" alt="Internals" width="300">
+  <img src="/Images/MISLinternals.jpg" alt="Internals" width="400">
   <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
 </figure><br><br>
 
