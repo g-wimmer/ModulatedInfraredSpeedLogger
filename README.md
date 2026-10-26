@@ -1,6 +1,14 @@
 # Modulated Infrared Speed Logger
 The Modulated Infrared Speed Logger or M.I.S.L. is a low-profile, battery powered, modulated infrared speedometer for [Fringe's](https://fringe.org/) CMU [buggies](https://www.cmu.edu/buggy/). 
 
+<figure>
+  <img src="/Images/MISL.jpg" alt="Modulated Infrared Speed Logger" width="400">
+  <figcaption>Modulated Infrared Speed Logger</figcaption>
+</figure>
+<figure>
+  <img src="/Images/MISLinBaltic1.jpg" alt="Modulated Infrared Speed Logger in a buggy" width="200">
+  <figcaption>M.I.S.L fitted in a buggy</figcaption>
+</figure>
 ## Context
 The speed of a buggy is arguably one of the most important factors in determining the winner of a buggy race. Having an accurate measure of speed would also be useful in determining how well each pusher performs. Being able to measure measure how different buggy engineering choices affect top speed would allow for data-driven designs.
 Other teams have tackled this challenge through the use of GPS beacons to track location and speed at the same time. However, GPS is not perfect even when using an IMU to fill in the gaps between GPS pings.
@@ -29,7 +37,15 @@ What is needed: a device that can accurately measure and store real buggy speeds
 **Signal Processing:** The phototransistor is connected to a AC-coupler/high-pass filter to isolate the 30kHz carrier signal and remove any noise from ambient light.
 Prototypes of the device made use of a gain stage, half-wave rectifier and envelope detector, but the gain was unnecessary and the envelope detector didn't function consistently enough at these voltage levels (the diode needs about 0.2-0.3V to conduct, and the signal swing is about 0.3V p-p). The gain stage was converted into a unity-gain buffer (LM358) to isolate the high-impedance AC-coupling node from the comparator’s hysteresis network. The signal was then fed into a comparator (LM393) set up as a Schmitt trigger. This results in a clean toggling, on-off, signal. This digital signal was then fed into the Arduino Pro Mini's hardware counter to count the number of flips (pulses from the IR LED).
 
-<img src="/Images/signalprocessing.jpg" alt="Signal Processing Circuit" width="300">
+<figure>
+  <img src="/Images/signalprocessing.jpg" alt="Analog Circuitry" width="300">
+  <figcaption>Signal Processing Circuitry</figcaption>
+</figure>
+<figure>
+  <img src="/Images/MISLinternals.jpg" alt="Internals" width="300">
+  <figcaption>Internals of the MISL before adding the SD card and button</figcaption>
+</figure>
+
 
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
 
