@@ -91,7 +91,7 @@ The 2-window rule keeps stray edges from being counted as spokes, and it still c
 To get accurate speed from the log, treat the rows as position markers: plot `spoke` × 4.52 in against `time_ms`, smooth it, and differentiate. A single `dt_ms` is only good to about ±1.5% at 20 mph and ±3% at 40 mph because of the 0.2 ms steps, so smoothing over several spokes gives cleaner results. The real distance per spoke (polyurethane squish included) can be measured by rolling the buggy a known distance and dividing by the number of spokes logged.
  
 **Firmware Notes:**
-- Board setting: Tools > Board > Arduino Pro or Pro Mini, Processor ATmega328P (3.3V, 8 MHz). All of the timing assumes 8 MHz, and the sketch will refuse to compile with any other clock.
+- All of the timing assumes 8 MHz.
 - Libraries: Adafruit GFX, Adafruit BusIO, Adafruit LED Backpack, and SdFat (version 2.x).
 - Timer0 is used for the 200 µs sampling interrupt, so `millis()` and `delay()` still work, but `analogWrite()` on pins 5 and 6 does not.
 - Settings at the top of the sketch: `CARRIER_HZ`, `CLEAR_MIN`, `BLOCK_MAX`, `BLOCK_CONFIRM`, `MIN_INTERVAL_PCT`, `WHEEL_DIAMETER_IN`, and `SPOKES`. `WINDOW_US` must stay at 200 since the log timestamps assume it.
@@ -104,15 +104,20 @@ To get accurate speed from the log, treat the rows as position markers: plot `sp
 
 2. Once in place, put the rear wheel in place and tighten down the rear wheel bolt (ensuring it goes through the opening in the M.I.S.L.'s case).
 
-3. Flip the power switch to turn on the device. It will immediatly begin displaying the speed. 
+3. Flip the power switch to turn on the device. It will immediately begin displaying the speed. 
 
 4. If you wish to record the speed data or find the high speed of the buggy, press the small button on the right side of the case. An `R` should appear in the leftmost display segment indicating that a recording has started. Upon pressing the button again the recording will stop and the highest speed of the run will be shown for 10 seconds.
 
 5. Remove the SD card for viewing and processing the data.
+    - Use [plot_run.py](/runs/plot_run.py) to view the speed and acceleration of the entire run
 
 
 ## Troubleshooting
-- If the device is reading `00.0` even if a wheel is spinning, the most likely cause is the phototransistor being obscured. Take a q-tip and clean out the phototransistor and LED holding tubes. If that doesnt work, use a small amount of IPA on the q-tip. As a last resort, use a very small amount of acetone on the q-tip to clean the phototransistor's surface. (make sure to dry quickly)
+Future members of Fringe are welcome to reach out to me if the device breaks or is no longer functioning properly.
+
+- If, after a roll, the device reads a highscore that is unbelievably high, the most likely cause is that the wheel's spoke was left partially obscuring the beam, causing the sensor to toggle repeatedly. Do not worry, once the wheel starts spinning, it will record properly. The [plot_run.py](/runs/plot_run.py) program will filter these abberant datapoints out.
+
+- If the device is reading `00.0` even if a wheel is spinning, the most likely cause is the phototransistor being obscured. Take a q-tip and clean out the phototransistor and LED holding tubes. If that doesnt work, use a small amount of IPA on the q-tip. As a last resort, use a very small amount of acetone on the q-tip to clean the phototransistor's surface. (make sure to dry quickly, acetone will melt the case and the phototransistor's surface)
 
 - If the device is powered on, but the display does not turn on, the most likely cause is a display wire snapping. (the red LED inside of the case will still be on if this is the case) The display wires arent potted and are likely to break. Simply resolder it to the back of the display.
 
@@ -122,3 +127,5 @@ To get accurate speed from the log, treat the rows as position markers: plot `sp
     - The device will still display speeds without the SD card.
 
 - If the display appears dim or the device appears to restart itself, replace the batteries.
+
+
