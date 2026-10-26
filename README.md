@@ -10,12 +10,12 @@ Speed is currently measured by eyeballing speed from the follow car's speedomete
 Currently there is:
 - No accurate measure of speed (others infer speed through GPS/IMU data)
 - No continuous logging of speed throughout the entire roll
-- No accurate measure of each pusher's pushing strength (besides measuring the total time to complete a hill) 
+- Pusher strength is currently evaluated by time to push a hill, but could benefit from more granular measurements of acceleration
 
 What is needed: a device that can accurately measure and store real buggy speeds while the buggy rolls, that can fit within the constrained spaces within a buggy, does not add extra mass or interfere with the wheel and can survive the intense vibrations of a buggy rolling at top speed.
 
 ## Design
-**Space Constraints:** Fringe's buggies are generally reverse trikes, meaning there are 2 wheels in the front and 1 in the rear. This rear wheel is fully enclosed within the buggy and does not turn for steering and is an optimal choice to place a device to measure its speed. However, each buggy’s shell shape is unique and there is very little space around the rear wheel as the driver's feet can go right up against the front of the rear frame holding the wheel. This leaves the <1in gaps besides the wheel and the ~2in gap behind the wheel. Getting the device into place also means not all of that space is usable, since the device must fit through the tight rear hatch.
+**Space Constraints:** Fringe's buggies are reverse trikes, meaning there are 2 wheels in the front and 1 in the rear. This rear wheel is fully enclosed within the buggy and does not turn for steering and is an optimal choice to place a device to measure its speed. However, each buggy’s shell shape is unique and there is very little space around the rear wheel as the driver's feet can go right up against the front of the rear frame holding the wheel. This leaves the <1in gaps besides the wheel and the ~2in gap behind the wheel. Getting the device into place also means not all of that space is usable, since the device must fit through the tight rear hatch.
 
 **Microprocessor:** Arduino Pro Mini 3.3V (ATmega328P, 8 MHz) — low profile and has a low current draw while still having enough pins to allow for all of the device's capabilities.
 
@@ -27,7 +27,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 **Measurement:** Infrared was chosen as it wouldn't require additional mass attached to the wheel (like a hall effect sensor would). An IR LED emits a carrier signal at 30kHz, driven by an NPN transistor. The light is sent through the gaps between the spokes of the wheel where it is received by a phototransistor. The spokes obscure the signal, which is used to determine whether a spoke is passing by. Modulated IR was chosen to allow the device to work regardless of ambient light conditions.
 
 **Signal Processing:** The phototransistor is connected to a AC-coupler/high-pass filter to isolate the 30kHz carrier signal and remove any noise from ambient light.
-Prototypes of the device made use of a gain stage, half-wave rectifier and envelope detector, but the gain was unnecessary and the envelope detector didn't function consistently enough at these voltage levels (a diode needs about 0.2-0.3V to conduct, and the signal swing is about 0.3V p-p). The gain stage was converted into a unity-gain buffer (LM358) to isolate the high-impedance AC-coupling node from the comparator’s hysteresis network. The signal was then fed into a comparator (LM393) set up as a Schmitt trigger. This results in a clean toggling, on-off, signal. This digital signal was then fed into the Arduino Pro Mini's hardware counter to count the number of flips (pulses from the IR LED).
+Prototypes of the device made use of a gain stage, half-wave rectifier and envelope detector, but the gain was unnecessary and the envelope detector didn't function consistently enough at these voltage levels (the diode needs about 0.2-0.3V to conduct, and the signal swing is about 0.3V p-p). The gain stage was converted into a unity-gain buffer (LM358) to isolate the high-impedance AC-coupling node from the comparator’s hysteresis network. The signal was then fed into a comparator (LM393) set up as a Schmitt trigger. This results in a clean toggling, on-off, signal. This digital signal was then fed into the Arduino Pro Mini's hardware counter to count the number of flips (pulses from the IR LED).
 
 <img src="/Images/signalprocessing.jpg" alt="Signal Processing Circuit" width="300">
 
