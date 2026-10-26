@@ -28,6 +28,7 @@ What is needed: a device that can accurately measure and store real buggy speeds
 
 **Signal Processing:** The phototransistor is connected to a AC-coupler/high-pass filter to isolate the 30kHz carrier signal and remove any noise from ambient light.
 Prototypes of the device made use of a gain stage, half-wave rectifier and envelope detector, but the gain was unnecessary and the envelope detector didn't function consistently enough at these voltage levels (a diode needs about 0.2-0.3V to conduct, and the signal swing is about 0.3V p-p). The gain stage was converted into a unity-gain buffer (LM358) to isolate the high-impedance AC-coupling node from the comparator’s hysteresis network. The signal was then fed into a comparator (LM393) set up as a Schmitt trigger. This results in a clean toggling, on-off, signal. This digital signal was then fed into the Arduino Pro Mini's hardware counter to count the number of flips (pulses from the IR LED).
+
 <img src="/Images/signalprocessing.jpg" alt="Signal Processing Circuit" width="300">
 
 **Case and Potting:** The case is printed in PLA+ filament. The rear portion of the case holds the Arduino, SD card reader, display and other circuitry. The battery case is mounted to the right side. Wires extending from the rear portion of the case go to the IR LED and phototransistor positioned opposite each other on the sides of the wheel well. The rear portion of the case is potted in a 2-part silicone compound (McMaster-Carr 74965A52) chosen for its gel-like consistency to reduce vibration.
