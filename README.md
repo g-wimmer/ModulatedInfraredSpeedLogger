@@ -15,9 +15,9 @@ Other teams have tackled this challenge through the use of GPS beacons to track 
 
 ## The Problem
 Speed is currently measured by eyeballing speed from the follow car's speedometer or, during race day, when Sweepstakes sets up a speed checkpoint near the chute turn of the course.
-Currently there is:
-- No accurate measure of speed (others infer speed through GPS/IMU data)
-- No continuous logging of speed throughout the entire roll
+Currently:
+- There is no accurate measure of speed (others infer speed through GPS/IMU data)
+- There is no continuous logging of speed throughout the entire roll
 - Pusher strength is currently evaluated by time to push a hill, but could benefit from more granular measurements of acceleration
 
 What is needed: a device that can accurately measure and store real buggy speeds while the buggy rolls, that can fit within the constrained spaces within a buggy, does not add extra mass or interfere with the wheel and can survive the intense vibrations of a buggy rolling at top speed.
