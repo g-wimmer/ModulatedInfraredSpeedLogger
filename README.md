@@ -71,7 +71,7 @@ Prototypes of the device made use of a gain stage, half-wave rectifier and envel
 
 ## How it Works
 
-The code (`speedometer_logger.ino`) is built around one idea: **a spoke is detected when the carrier signal disappears.** While the beam is clear, the comparator toggles at the carrier frequency, about 30,000 times a second. When a spoke blocks the beam, the toggling stops. The Arduino counts the toggles in hardware, checks the count every 200 µs, and turns "the toggling just stopped" into a timestamp for each spoke. Both the speed readout and the log file are built from those timestamps.
+The code [`speedometer_logger.ino`](speedometer_logger/speedometer_logger.ino) is built around one idea: **a spoke is detected when the carrier signal disappears.** While the beam is clear, the comparator toggles at the carrier frequency, about 30,000 times a second. When a spoke blocks the beam, the toggling stops. The Arduino counts the toggles in hardware, checks the count every 200 µs, and turns "the toggling just stopped" into a timestamp for each spoke. Both the speed readout and the log file are built from those timestamps.
  
 ```
 Timer2 carrier (D3) -> IR LED -> [wheel] -> phototransistor -> analog circuit -> comparator -> D5
